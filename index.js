@@ -4,6 +4,7 @@
 const
   express = require('express'),
   bodyParser = require('body-parser'),
+  request = require('request'),
   app = express().use(bodyParser.json()); // creates express http server
 
   app.post('/webhook', (req, res) => {  
