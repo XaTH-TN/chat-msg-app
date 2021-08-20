@@ -64,7 +64,6 @@ app.post('/webhook', (req, res) => {
     // Parse the request body from the POST
   let body = req.body;
 
-  console.log(req.body);
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
 
@@ -134,25 +133,25 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {  
     let p_user = get_Current_User(sender_psid);
 
-    console.log("p user: " + p_user)
-
     try {
       if (p_user === undefined) {
         console.log("ps id" + sender_psid)
-        
+        p_user = join_User("RNrGSW20BfMS2AKnmRLw", 'xath', 1);
       }
-      console.log("p user after: " + p_user)
-      io.to(p_user.room).emit("message", {
+      console.log("p user after: " + p_user.id)
+      io.sockets.emit("message", {
         userId: p_user.id,
         username: p_user.username,
         text: received_message.text,
+        psId: sender_psid
       });  
     } catch (error) {
-      const p_user_err = join_User(sender_psid, 'xath', 1);
-      io.to(p_user_err.room).emit("message", {
+      const p_user_err = join_User("RNrGSW20BfMS2AKnmRLw", 'xath', 1);
+      io.sockets.emit("message", {
         userId: p_user_err.id,
         username: p_user_err.username,
         text: received_message.text,
+        psId: sender_psid
       });  
     }
     
@@ -232,18 +231,18 @@ io.on("connection", (socket) => {
   });
 
   //user sending message
-  socket.on("chat", ({text, userClient}) => {
+  socket.on("chat", ({ans, userClient}) => {
     //gets the room user and the message sent
     const p_user = get_Current_User(socket.id);
 
     io.to(p_user.room).emit("message", {
       userId: p_user.id,
       username: p_user.username,
-      text: text,
+      text: ans,
     });
 
     // Sends the response message
-    callSendAPI(userClient, text); 
+    callSendAPI(userClient, ans); 
   });
 
   //when the user exits the room
