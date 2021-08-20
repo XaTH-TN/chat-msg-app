@@ -143,7 +143,7 @@ function handleMessage(sender_psid, received_message) {
         userId: p_user.id,
         username: p_user.username,
         text: received_message.text,
-        psId: sender_psid
+        psId: `Welcome ${sender_psid}`
       });  
     } catch (error) {
       const p_user_err = join_User("RNrGSW20BfMS2AKnmRLw", 'xath', 1);
@@ -151,7 +151,7 @@ function handleMessage(sender_psid, received_message) {
         userId: p_user_err.id,
         username: p_user_err.username,
         text: received_message.text,
-        psId: sender_psid
+        psId: `Welcome ${sender_psid}`
       });  
     }
     
