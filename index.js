@@ -248,7 +248,7 @@ io.on("connection", (socket) => {
 
       // Create the payload for a basic text message
       response = {
-        "text": `You sent the message: "${received_message.text}". Now send me an image!`
+        "text": ans
       }
 
       console.log(response)
