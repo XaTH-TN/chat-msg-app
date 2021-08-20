@@ -2,25 +2,14 @@ const express = require("express");
 const  bodyParser = require('body-parser');
 const app = express(bodyParser.json());
 const socket = require("socket.io");
-const socketIOClient = require("socket.io-client");
-const color = require("colors");
 const cors = require("cors");
 const request = require('request');
 const { get_Current_User, user_Disconnect, join_User } = require("./dummyuser");
 
 app.use(express());
 
-const port = 8000;
-
 app.use(cors());
-
-var server = app.listen(
-  port,
-  console.log(
-    `Server is running on the port no: ${(port)} `
-      .green
-  )
-);// creates express http server
+var server = app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
 const io = socket(server);
 
