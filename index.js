@@ -133,10 +133,15 @@ function handleMessage(sender_psid, received_message) {
   // Check if the message contains text
   if (received_message.text) {  
     let p_user = get_Current_User(sender_psid);
-    if (!p_user) {
+
+    console.log("p user: " + p_user)
+
+    if (p_user.id === null || p_user.id === undefined) {
       console.log("ps id" + sender_psid)
       p_user = join_User(sender_psid, 'xath', 1);
     }
+
+    console.log("p user after: " + p_user)
     io.to(p_user.room).emit("message", {
       userId: p_user.id,
       username: p_user.username,
