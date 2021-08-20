@@ -83,6 +83,7 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
+        console.log("handle message")
         handleMessage(sender_psid, webhook_event.message);        
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
@@ -133,7 +134,8 @@ function handleMessage(sender_psid, received_message) {
   if (received_message.text) {  
     let p_user = get_Current_User(sender_psid);
     if (!p_user) {
-      p_user = join_User(sender_psid, username, roomname);
+      console.log("ps id" + sender_psid)
+      p_user = join_User(sender_psid, 'xath', 1);
     }
     io.to(p_user.room).emit("message", {
       userId: p_user.id,
