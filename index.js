@@ -136,17 +136,26 @@ function handleMessage(sender_psid, received_message) {
 
     console.log("p user: " + p_user)
 
-    if (p_user.id === null || p_user.id === undefined) {
-      console.log("ps id" + sender_psid)
-      p_user = join_User(sender_psid, 'xath', 1);
+    try {
+      if (p_user === undefined) {
+        console.log("ps id" + sender_psid)
+        
+      }
+      console.log("p user after: " + p_user)
+      io.to(p_user.room).emit("message", {
+        userId: p_user.id,
+        username: p_user.username,
+        text: received_message.text,
+      });  
+    } catch (error) {
+      const p_user_err = join_User(sender_psid, 'xath', 1);
+      io.to(p_user_err.room).emit("message", {
+        userId: p_user_err.id,
+        username: p_user_err.username,
+        text: received_message.text,
+      });  
     }
-
-    console.log("p user after: " + p_user)
-    io.to(p_user.room).emit("message", {
-      userId: p_user.id,
-      username: p_user.username,
-      text: received_message.text,
-    });  
+    
 
     // Create the payload for a basic text message
     // response = {
