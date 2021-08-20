@@ -241,8 +241,22 @@ io.on("connection", (socket) => {
       text: ans,
     });
 
+    let response;
+
+  // Check if the message contains text
+    if (userClient !== '' && userClient !== null && userClient !== undefined) {    
+
+      // Create the payload for a basic text message
+      response = {
+        "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      }
+
+      console.log(response)
+
+      callSendAPI(userClient, response); 
+
+    }  
     // Sends the response message
-    callSendAPI(userClient, ans); 
   });
 
   //when the user exits the room
